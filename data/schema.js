@@ -13,7 +13,7 @@ type Post {
   author: Author
 }
 type Query {
-  author(firstName: String, lastName: String): Author
+  author(id: Int, firstName: String, lastName: String): Author
   post(id: Int, title: String, text: String): Post
   getFortuneCookie: String
 }
