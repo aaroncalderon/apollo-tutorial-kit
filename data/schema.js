@@ -12,11 +12,13 @@ type Post {
   views: Int
   author: Author
 }
+
 type Query {
   author(id: Int, firstName: String, lastName: String): Author
   post(id: Int, title: String, text: String): Post
   getFortuneCookie: String
 }
+
 schema {
   query: Query
 }

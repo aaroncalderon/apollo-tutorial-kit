@@ -1,4 +1,3 @@
-import { MockList } from 'graphql-tools';
 import casual from 'casual';
 
 const mocks = {
