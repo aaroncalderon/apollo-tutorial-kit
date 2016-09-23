@@ -4,9 +4,7 @@ import _ from 'lodash';
 import Mongoose from 'mongoose';
 import rp from 'request-promise';
 
-import _cfg from '../config/config' 
-
-console.log(_cfg.pass)
+import _cfg from '../config/config'
 
 const db = new Sequelize(_cfg.db, _cfg.user, _cfg.pass, {
   host: _cfg.host,
@@ -47,19 +45,23 @@ const View = Mongoose.model('views', ViewSchema);
 
 casual.seed(123);
 db.sync({ force: true }).then(() => {
-  _.times(10, () => {
+  // we are using the then() function to populate sample data
+  // to our database. 
+  _.times(5, () => {
     return AuthorModel.create({
       firstName: casual.first_name,
       lastName: casual.last_name,
     }).then((author) => {
-      return author.createPost({
-        title: `A post by ${author.firstName}`,
-        text: casual.sentences(3),
-      }).then((post) => {
-        return View.update(
-          { postId: post.id },
-          { views: casual.integer(0, 100) },
-          { upsert: true });
+      return _.times(5, (i) => {
+        author.createPost({
+          title: `A post by ${author.firstName} [${i}]`,
+          text: casual.sentences(3),
+        }).then((post) => {
+          return View.update(
+            { postId: post.id },
+            { views: casual.integer(0, 100) },
+            { upsert: true });
+        })
       });
     });
   });
