@@ -6,4 +6,4 @@ const Config = {
   pass: "pa$$w0rd",
 };
 
-export { Config };
+export default Config;
